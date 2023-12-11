@@ -25,13 +25,11 @@ class FeatureExtractor:
         for verb in self.verbs:
             subj = Subject(verb, self.nouns, self.doc, self.coref)
             # skip the verb if there is no subject identified
-            if not subj.subj:
-                continue
+            if not subj.subj: continue
             dis_subj = subj.getDisplaySubject()
             action = Action(verb)
             fa = action.full_action
-            if not fa:
-                return None
+            if not fa: return None
             data_obj = self.createDataObject(action, fa, dis_subj)
             if data_obj and data_obj not in data_objects:
                 data_objects.append(data_obj)
@@ -40,10 +38,8 @@ class FeatureExtractor:
             if res:
                 add_obj, add_verb = res
                 for obj in add_obj:
-                    if obj not in data_objects:
-                        data_objects.append(obj)
-        if len(data_objects) > 0:
-            return data_objects
+                    if obj not in data_objects: data_objects.append(obj)
+        if len(data_objects) > 0: return data_objects
         return None
 
     def getAdditionalDataObject(self, verb, subj):
@@ -55,8 +51,7 @@ class FeatureExtractor:
             if child.dep_ == 'conj' or child.dep_ == 'advcl':
                 # print(verb, child)
                 n_subj = Subject(child, self.nouns, self.doc, self.coref)
-                if not n_subj.subj:
-                    add_verb = child
+                if not n_subj.subj: add_verb = child
         if not add_verb:
             for child in verb.children:
                 if child.dep_ == 'prep':
@@ -64,10 +59,8 @@ class FeatureExtractor:
                         if 'comp' in cchild.dep_ and cchild.pos_ == 'VERB':
                             n_subj = Subject(cchild, self.nouns,
                                              self.doc, self.coref)
-                            if not n_subj.subj:
-                                add_verb = cchild
-        if add_verb:
-            return self.getObjectsFromVerb(add_verb, subj)
+                            if not n_subj.subj: add_verb = cchild
+        if add_verb: return self.getObjectsFromVerb(add_verb, subj)
         return None
 
     def createDataObject(self, action, fa, dis_subj):
@@ -83,8 +76,7 @@ class FeatureExtractor:
     def isNamedEntityPresent(self, dis_obj):
         for obj in dis_obj:
             for label in obj.keys():
-                if label != 'unknown':
-                    return True
+                if label != 'unknown': return True
         return False
 
     def getObjectsFromVerb(self, verb, subj):
@@ -92,11 +84,8 @@ class FeatureExtractor:
         dis_subj = subj.getDisplaySubject()
         action = Action(verb)
         fa = action.full_action
-        if not fa:
-            return None
+        if not fa: return None
         data_obj = self.createDataObject(action, fa, dis_subj)
-        if data_obj:
-            data_objects.append(data_obj)
-        if len(data_objects) > 0:
-            return data_objects, verb
+        if data_obj: data_objects.append(data_obj)
+        if len(data_objects) > 0: return data_objects, verb
         return None
