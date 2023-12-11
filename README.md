@@ -4,10 +4,10 @@ In this repository, you will find the scripts that I used for creating a live bl
 <h3>Data extraction</h3>
 This folder is split up in <i>race data</i> and <i>blog data</i>.
 
-<h2>Blog data</h2>
+<h4>Blog data</h4>
 The Jupyter notebook contains the code used to scrape all blogs after 2018 from <i>Autosport.com</i>. The scraped items can be found in the data set folder.
 
-<h2>Race data</h2>
+<h4>Race data</h4>
 In the race data folder, the <i>Node.js</i> file used to scrape data from <i>TFeed</i> can be found. Furthermore, the Jupyter notebooks to extract data from the other sources are present here, as well as the folders containing the extracted data itself.
 
 <h3>Event identification</h3>
